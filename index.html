@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite App</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <div class="container mx-auto p-4" x-data="app">
+            <template x-for="item in $store.app.data.posts">
+                <section class="mb-4 p-4 border rounded shadow" :data-edit="item.id" data-fields="title,body,image,icon">
+                    <h2 class="text-xl font-bold mb-2" x-text="item.title"></h2>
+                    <p class="text-gray-700" x-html="item.body"></p>
+                    <img :src="item.image" />
+
+                    <span x-html="item.icon"></span>
+                </section>
+            </template>
+        </div>
+
+        <div id="app"></div>
+
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.store('app', {
+                    data: {
+                        posts: [
+                            {
+                                id: 1,
+                                title: 'Hello world',
+                                body: 'How are you doing?',
+                                icon: '',
+                            },
+                            {
+                                id: 2,
+                                title: 'Second article',
+                                body: 'Lorem lila',
+                                icon: '',
+                            },
+                        ],
+                    },
+                });
+            });
+        </script>
+        <script type="module" src="/src/main.js"></script>
+    </body>
+</html>

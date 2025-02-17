@@ -1,9 +1,10 @@
 // vite.config.js
 import { defineConfig } from 'vite';
 import convertComponentsPlugin from './vite-plugin-convert-components';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-    plugins: [convertComponentsPlugin()],
+    plugins: [convertComponentsPlugin(), tailwindcss()],
     build: {
         rollupOptions: {
             input: {

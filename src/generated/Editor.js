@@ -65,7 +65,7 @@
                         <template x-if="$store.editor.curFields.includes('info')">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1"> Info </label>
-                                <textarea :class="formInput" rows="4" x-model="$store.app.data.posts[$store.editor.curIndex].info" style="resize: none"></textarea>
+                                <textarea :class="formInput" class="resize-none" rows="4" x-model="$store.app.data.posts[$store.editor.curIndex].info" style="resize: none:"></textarea>
                             </div>
                         </template>
 
@@ -98,7 +98,82 @@
         </div>
     </div>`;
 
-    
+    export function myEditor() {
+        return {
+            formInput: 'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500',
+
+            save() {
+                console.log(Alpine.store('app').data);
+                Alpine.store('editor').close();
+            },
+            triggerImageUpload(blockId) {
+                this.$refs.imageInput.click();
+            },
+            async handleImageUpload(event) {
+                const input = event.target;
+                if (!input.files?.length) return;
+
+                const file = input.files[0];
+                const reader = new FileReader();
+
+                reader.onload = async (e) => {
+                    const img = new Image();
+                    img.onload = async () => {
+                        const canvas = document.createElement('canvas');
+                        // const pica = new Pica();
+
+                        // Calculate new dimensions maintaining aspect ratio
+                        const aspectRatio = img.width / img.height;
+                        const newWidth = 750;
+                        const newHeight = newWidth / aspectRatio;
+
+                        // Set canvas dimensions
+                        canvas.width = newWidth;
+                        canvas.height = newHeight;
+
+                        // Use Pica to resize the image
+                        try {
+                            await pica().resize(img, canvas);
+
+                            // Convert to base64
+                            const resizedImage = canvas.toDataURL('image/jpeg', 0.85);
+
+                            // Update block content
+                            Alpine.store('app').data.posts[Alpine.store('editor').curIndex].image = resizedImage;
+                        } catch (error) {
+                            console.error('Error resizing image:', error);
+                        }
+                    };
+                    img.src = e.target?.result;
+                };
+
+                reader.readAsDataURL(file);
+
+                // Reset file input
+                input.value = '';
+            },
+
+            execCommand(command, value) {
+                document.execCommand(command, false, value);
+                const editor = this.$refs.richTextEditor;
+                if (this.selectedBlock) {
+                    this.selectedBlock.content = editor.innerHTML;
+                }
+            },
+
+            addLink() {
+                const url = prompt('Enter URL:');
+                if (url) {
+                    this.execCommand('createLink', url);
+                }
+            },
+
+            handleRichTextChange() {
+                const editor = this.$refs.richTextEditor;
+                Alpine.store('app').data.posts[Alpine.store('editor').curIndex].body = editor.innerHTML;
+            },
+        };
+    }
 
     const style = `[data-edit] {
         border: 1px solid transparent !important;

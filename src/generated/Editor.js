@@ -65,7 +65,7 @@
                         <template x-if="$store.editor.curFields.includes('info')">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1"> Info </label>
-                                <textarea :class="formInput" class="resize-none" rows="4" x-model="$store.app.data.posts[$store.editor.curIndex].info"></textarea>
+                                <textarea :class="formInput" rows="4" x-model="$store.app.data.posts[$store.editor.curIndex].info" style="resize: none"></textarea>
                             </div>
                         </template>
 

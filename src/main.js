@@ -47,4 +47,26 @@ document.addEventListener('click', function (event) {
     }
 });
 
+function customEnterTransition(el) {
+    el.classList.add('custom-enter');
+    el.addEventListener(
+        'animationend',
+        () => {
+            el.classList.remove('custom-enter');
+        },
+        { once: true },
+    );
+}
+
+function customLeaveTransition(el) {
+    el.classList.add('custom-leave');
+    el.addEventListener(
+        'animationend',
+        () => {
+            el.classList.remove('custom-leave');
+        },
+        { once: true },
+    );
+}
+
 Alpine.start();

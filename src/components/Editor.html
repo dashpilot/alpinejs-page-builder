@@ -5,7 +5,7 @@
         <div x-show="$store.editor.isOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="$store.editor.close()"></div>
 
         <!-- Sidebar panel -->
-        <div x-show="$store.editor.isOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="fixed top-0 right-0 h-full w-96 bg-white shadow-lg flex flex-col justify-between">
+        <div x-show="$store.editor.isOpen" @transition:enter="customEnterTransition" @transition:leave="customLeaveTransition" class="fixed top-0 right-0 h-full w-96 bg-white custom-shadow flex flex-col justify-between">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-semibold">Edit Item</h2>
@@ -191,5 +191,35 @@
 
     a {
         text-decoration: underline;
+    }
+
+    .custom-shadow {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(100%);
+        }
+    }
+
+    .custom-enter {
+        animation: slideIn 0.3s ease-out forwards;
+    }
+
+    .custom-leave {
+        animation: slideOut 0.3s ease-in forwards;
     }
 </style>

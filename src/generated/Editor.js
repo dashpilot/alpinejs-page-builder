@@ -175,7 +175,7 @@
         };
     }
 
-    const style = `[data-edit]:hover {
+    const style = `[data-edit] {
         border: 1px solid transparent !important;
         cursor: pointer;
     }

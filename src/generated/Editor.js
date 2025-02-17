@@ -176,7 +176,7 @@
     }
 
     const style = `[data-edit]:hover {
-        border: 1px solid transaprent;
+        border: 1px solid transparent !important;
         cursor: pointer;
     }
 

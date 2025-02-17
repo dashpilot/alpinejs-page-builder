@@ -91,9 +91,10 @@
                         </template>
                     </div>
                 </template>
-            </div>
-            <div class="p-6">
-                <button type="button" @click="save" class="w-full px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">Save</button>
+
+                <div class="p-6">
+                    <button type="button" @click="save" class="w-full px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">Save</button>
+                </div>
             </div>
         </div>
     </div>`;

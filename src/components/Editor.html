@@ -98,6 +98,13 @@
 
                 <template x-if="$store.editor.curIndex !== false">
                     <div class="space-y-4" spellcheck="false">
+                        <template x-if="$store.editor.curFields.includes('pretitle')">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1"> Pretitle </label>
+                                <input type="text" :class="formInput" placeholder="Enter pretitle" x-model="$store.app.data.posts[$store.editor.curIndex].pretitle" />
+                            </div>
+                        </template>
+
                         <template x-if="$store.editor.curFields.includes('title')">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1"> Title </label>

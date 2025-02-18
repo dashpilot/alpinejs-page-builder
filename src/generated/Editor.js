@@ -197,6 +197,7 @@
                 posts.push(newItem);
                 // Force update by reassigning the array
                 Alpine.store('app').data.posts = [...posts];
+                console.log('force re-render');
             },
         };
     }

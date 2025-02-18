@@ -88,9 +88,15 @@
                 Alpine.store('app').data.posts = [...posts];
                 console.log('force re-render');
 
+                // Use setTimeout to ensure the DOM has updated before clicking
                 setTimeout(() => {
-                    document.querySelector('[data-edit="' + newItem.id + '"]').click();
-                }, 100);
+                    const newPostElement = document.querySelector('[data-edit="' + newItem.id + '"]');
+                    if (newPostElement) {
+                        newPostElement.click();
+                    } else {
+                        console.warn('New post element not found');
+                    }
+                }, 150);
             },
         };
     }

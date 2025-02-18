@@ -80,11 +80,17 @@
                 newItem.id = Math.random().toString(36).substr(2, 6);
                 newItem.layout = 'post';
                 newItem.title = 'Lorem ipsum';
+                newItem.description = 'Lorem ipsum dolor site amet';
+                newItem.image = 'https://alpinejs-page-builder.vercel.app/placeholder.jpg';
                 const posts = Alpine.store('app').data.posts;
                 posts.push(newItem);
                 // Force update by reassigning the array
                 Alpine.store('app').data.posts = [...posts];
                 console.log('force re-render');
+
+                setTimeout(() => {
+                    document.querySelector('[data-edit="' + newItem.id + '"]').click();
+                }, 100);
             },
         };
     }

@@ -1,6 +1,5 @@
-import pica from 'pica';
 
-export const template = `<!-- Sidebar -->
+    export const template = `<!-- Sidebar -->
     <div x-data="myEditor" x-cloak @keydown.escape.window="$store.editor.close()">
         <!-- Backdrop -->
         <div x-show="$store.editor.isOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="$store.editor.close()"></div>
@@ -99,84 +98,85 @@ export const template = `<!-- Sidebar -->
         </div>
     </div>`;
 
-export function myEditor() {
-    return {
-        formInput: 'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500',
+    import pica from 'pica';
+    export function myEditor() {
+        return {
+            formInput: 'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500',
 
-        save() {
-            console.log(Alpine.store('app').data);
-            Alpine.store('editor').close();
-        },
-        triggerImageUpload(blockId) {
-            this.$refs.imageInput.click();
-        },
-        async handleImageUpload(event) {
-            const input = event.target;
-            if (!input.files?.length) return;
+            save() {
+                console.log(Alpine.store('app').data);
+                Alpine.store('editor').close();
+            },
+            triggerImageUpload(blockId) {
+                this.$refs.imageInput.click();
+            },
+            async handleImageUpload(event) {
+                const input = event.target;
+                if (!input.files?.length) return;
 
-            const file = input.files[0];
-            const reader = new FileReader();
+                const file = input.files[0];
+                const reader = new FileReader();
 
-            reader.onload = async (e) => {
-                const img = new Image();
-                img.onload = async () => {
-                    const canvas = document.createElement('canvas');
-                    // const pica = new Pica();
+                reader.onload = async (e) => {
+                    const img = new Image();
+                    img.onload = async () => {
+                        const canvas = document.createElement('canvas');
+                        // const pica = new Pica();
 
-                    // Calculate new dimensions maintaining aspect ratio
-                    const aspectRatio = img.width / img.height;
-                    const newWidth = 750;
-                    const newHeight = newWidth / aspectRatio;
+                        // Calculate new dimensions maintaining aspect ratio
+                        const aspectRatio = img.width / img.height;
+                        const newWidth = 750;
+                        const newHeight = newWidth / aspectRatio;
 
-                    // Set canvas dimensions
-                    canvas.width = newWidth;
-                    canvas.height = newHeight;
+                        // Set canvas dimensions
+                        canvas.width = newWidth;
+                        canvas.height = newHeight;
 
-                    // Use Pica to resize the image
-                    try {
-                        await pica().resize(img, canvas);
+                        // Use Pica to resize the image
+                        try {
+                            await pica().resize(img, canvas);
 
-                        // Convert to base64
-                        const resizedImage = canvas.toDataURL('image/jpeg', 0.85);
+                            // Convert to base64
+                            const resizedImage = canvas.toDataURL('image/jpeg', 0.85);
 
-                        // Update block content
-                        Alpine.store('app').data.posts[Alpine.store('editor').curIndex].image = resizedImage;
-                    } catch (error) {
-                        console.error('Error resizing image:', error);
-                    }
+                            // Update block content
+                            Alpine.store('app').data.posts[Alpine.store('editor').curIndex].image = resizedImage;
+                        } catch (error) {
+                            console.error('Error resizing image:', error);
+                        }
+                    };
+                    img.src = e.target?.result;
                 };
-                img.src = e.target?.result;
-            };
 
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
 
-            // Reset file input
-            input.value = '';
-        },
+                // Reset file input
+                input.value = '';
+            },
 
-        execCommand(command, value) {
-            document.execCommand(command, false, value);
-            const editor = this.$refs.richTextEditor;
-            if (this.selectedBlock) {
-                this.selectedBlock.content = editor.innerHTML;
-            }
-        },
+            execCommand(command, value) {
+                document.execCommand(command, false, value);
+                const editor = this.$refs.richTextEditor;
+                if (this.selectedBlock) {
+                    this.selectedBlock.content = editor.innerHTML;
+                }
+            },
 
-        addLink() {
-            const url = prompt('Enter URL:');
-            if (url) {
-                this.execCommand('createLink', url);
-            }
-        },
+            addLink() {
+                const url = prompt('Enter URL:');
+                if (url) {
+                    this.execCommand('createLink', url);
+                }
+            },
 
-        handleRichTextChange() {
-            const editor = this.$refs.richTextEditor;
-            Alpine.store('app').data.posts[Alpine.store('editor').curIndex].body = editor.innerHTML;
-        },
-    };
-}
+            handleRichTextChange() {
+                const editor = this.$refs.richTextEditor;
+                Alpine.store('app').data.posts[Alpine.store('editor').curIndex].body = editor.innerHTML;
+            },
+        };
+    }
 
-const style = `[data-edit] {
+    const style = `[data-edit] {
         border: 1px solid transparent !important;
         cursor: pointer;
     }
@@ -189,8 +189,9 @@ const style = `[data-edit] {
     a {
         text-decoration: underline;
     }`;
-if (style) {
-    const styleElement = document.createElement('style');
-    styleElement.textContent = style;
-    document.head.appendChild(styleElement);
-}
+    if (style) {
+      const styleElement = document.createElement('style');
+      styleElement.textContent = style;
+      document.head.appendChild(styleElement);
+    }
+  

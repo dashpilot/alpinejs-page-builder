@@ -99,9 +99,22 @@
 
                         <template x-if="$store.editor.curFields.includes('add')">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Add Post</label>
-                                <button @click="addPost" class="bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:border-gray-300 transition-colors w-full mb-3">Add Post</button>
-                                <button @click="deletePost($store.app.data.posts[$store.editor.curIndex].id)" class="bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:border-gray-300 transition-colors w-full">Delete Post</button>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Add/Delete</label>
+
+                                <div class="flex w-full max-w-2xl rounded-md shadow-sm" role="group">
+                                    <button @click="addPost" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-transparent border border-gray-300 rounded-l-lg hover:bg-blue-500 hover:text-white hover:border-blue-500 focus:z-10 focus:ring-2 focus:ring-blue-500 focus:text-white transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        Add Post
+                                    </button>
+                                    <button @click="deletePost($store.app.data.posts[$store.editor.curIndex].id)" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-transparent border border-gray-300 rounded-r-lg hover:bg-red-500 hover:text-white hover:border-red-500 focus:z-10 focus:ring-2 focus:ring-red-400 focus:text-white transition-colors" style="border-left: 0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        Delete Post
+                                    </button>
+                                </div>
                             </div>
                         </template>
                     </div>
